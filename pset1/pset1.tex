@@ -1,0 +1,91 @@
+% @Author: Luis Perez
+% @Date:   2016-02-02 21:09:55
+% @Last Modified by:   luis
+% @Last Modified time: 2016-02-02 21:50:20
+
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[pdftex]{graphicx}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+
+% Create answer counter to keep track of seperate responses
+\newcounter{AnswerCounter}
+\newcounter{SubAnswerCounter}
+\setcounter{AnswerCounter}{1}
+\setcounter{SubAnswerCounter}{1}
+
+% Create answer environment which uses counter
+\newenvironment{answer}[0]{
+  \setcounter{SubAnswerCounter}{1}
+  \bigskip
+  \textbf{Solution \arabic{AnswerCounter}}
+  \\
+  \begin{small}
+}{
+  \end{small}
+  \stepcounter{AnswerCounter}
+}
+
+\newenvironment{subanswer}[0]{
+  (\alph{SubAnswerCounter})
+}{
+ \bigskip
+  \stepcounter{SubAnswerCounter}
+}
+
+% Allows easy use of vectors
+\newcommand{\vect}[1]{\vec{\boldsymbol{#1}}}
+
+
+% Custom Header information on each page
+\pagestyle{fancy}
+\lhead{HUID: 70871564}
+\rhead{Luis Perez - \thepage}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}   % Horizontal rule
+
+\title{
+    % \vspace{-1in}
+    \usefont{OT1}{bch}{b}{n}
+    \normalfont \normalsize \textsc{Harvard University} \\ [25pt]
+    \horrule{0.5pt} \\[0.4cm]
+    \huge Physics 143a: Quantum Mechanics I \\ [20pt]
+    \normalfont \normalsize Problem Set 1
+    \horrule{2pt} \\[0.5cm]
+}
+\author{
+    \normalfont                 \normalsize
+        Luis Antonio Perez\\[-3pt]    \normalsize
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+\pagebreak
+
+\begin{answer}
+We now compute the specified wavelengths. We use the following formula:
+$$
+\lambda = \frac{h}{p}
+$$
+where we keep all SI units (m, s, kg, J, etc.) for the sake of comparison. We use the following plank's constant:
+$$
+h = (6.62607004e-34) \text{ m$^2$ kg / s}
+$$
+
+\begin{subanswer}
+According to a \href{https://www.google.com/search?q=average+walking+speed&oq=average+walking+speed&aqs=chrome.0.0l6.2335j1j1&sourceid=chrome&es_sm=122&ie=UTF-8}{quick Google search}, the average walking speed is $3.1$ mph. For the sake of comparing all of these values, this is about $1.38582$ m/s. I weight about 65kg. Plugging in, the result is:
+$$
+7.356e-36 \text{ m}
+$$
+\end{subanswer}
+\end{answer}
+
+\end{document}

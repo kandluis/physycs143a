@@ -1,0 +1,397 @@
+% @Author: luis
+% @Date:   2016-02-20 12:42:09
+% @Last Modified by:   luis
+% @Last Modified time: 2016-02-24 14:58:15
+
+% @Author: Luis Perez
+% @Date:   2016-02-02 21:09:55
+% @Last Modified by:   luis
+% @Last Modified time: 2016-02-19 17:47:15
+
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[pdftex]{graphicx}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+
+% Create answer counter to keep track of seperate responses
+\newcounter{AnswerCounter}
+\newcounter{SubAnswerCounter}
+\newcounter{SubSubAnswerCounter}
+\setcounter{AnswerCounter}{1}
+\setcounter{SubAnswerCounter}{1}
+\setcounter{SubSubAnswerCounter}{1}
+
+% Create answer environment which uses counter
+\newenvironment{answer}[0]{
+  \setcounter{SubAnswerCounter}{1}
+  \bigskip
+  \textbf{Solution \arabic{AnswerCounter}}
+  \\
+  \begin{small}
+}{
+  \end{small}
+  \stepcounter{AnswerCounter}
+}
+
+\newenvironment{subanswer}[0]{
+  \setcounter{SubSubAnswerCounter}{1}
+  (\alph{SubAnswerCounter})
+}{
+ \bigskip
+  \stepcounter{SubAnswerCounter}
+}
+
+\newenvironment{subsubanswer}[0]{
+  \hspace{0.25in}[\roman{SubSubAnswerCounter}]
+}{
+ \bigskip
+  \stepcounter{SubSubAnswerCounter}
+}
+
+% Allows easy use of vectors
+\newcommand{\vect}[1]{\vec{\boldsymbol{#1}}}
+\newcommand{\deln}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3}}}
+\newcommand{\del}[2]{\frac{\partial#1}{\partial #2}}
+
+
+% Custom Header information on each page
+\pagestyle{fancy}
+\lhead{HUID: 70871564}
+\rhead{Luis Perez - \thepage}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}   % Horizontal rule
+
+\title{
+    % \vspace{-1in}
+    \usefont{OT1}{bch}{b}{n}
+    \normalfont \normalsize \textsc{Harvard University} \\ [25pt]
+    \horrule{0.5pt} \\[0.4cm]
+    \huge Physics 143a: Quantum Mechanics I \\ [20pt]
+    \normalfont \normalsize Problem Set 4
+    \horrule{2pt} \\[0.5cm]
+}
+\author{
+    \normalfont                 \normalsize
+        Luis Antonio Perez\\[-3pt]    \normalsize
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+\pagebreak
+\begin{answer}
+\begin{subanswer}
+In one dimension, the SE is:
+$$
+-\frac{\hbar^2}{2m}\frac{\partial}{\partial x^2}\Psi(x,t) + V(x)\Psi(x,t) = i\hbar \frac{\partial}{\partial t}\Psi(x,t)
+$$
+and the Hamiltonian Operator is:
+$$
+\hat{H} = -\frac{\hbar^2}{2m}\frac{\partial^2}{\partial x^2} + V(x)
+$$
+Generalizing to three dimensions, we have:
+\begin{align*}
+-\frac{\hbar^2}{2m}\nabla^2\Psi(x,y,z,t) + V(x,y,z)\Psi(x,y,z,t) &= i\hbar \frac{\partial}{\partial t}\Psi(x,y,z,t) \\
+-\frac{\hbar^2}{2m}\left[\frac{\partial^2}{\partial x^2}\Psi(x,y,z,t) + \frac{\partial^2}{\partial y^2}\Psi(x,y,z,t) + \frac{\partial^2}{\partial z^2} \Psi(x,y,z,t)\right] + V(x,y,z)\Psi(x,y,z,t) &= i\hbar \frac{\partial}{\partial t}\Psi(x,y,z,t)
+\end{align*}
+We now re-parametrize in terms of $\phi$. We have $s = R\phi$, and therefore $x = R\cos \phi$ and $y = R \sin \phi$ and $z = 0$ (we're essentially transforming to polar coordinates). The process is relatively straight-forward, and we present the results now. First, note that:
+$$
+\frac{\partial^2}{\partial z^2}\Psi(x,y,z,t) = 0
+$$
+since we'll orient our coordinates so that the ring lies on the $z = 0$ plane.
+
+Using the typical parametrization for polar coordinates where $x = R\cos \phi$ and $y = R \sin \phi$, we first calculate $\frac{\partial \Psi}{\partial R}$:
+\begin{align*}
+\del{\Psi}{R} &=  \del{\Psi}{x}\del{x}{R} + \del{\Psi}{y}\del{y}{R} \\
+&= \cos \phi \del{\Psi}{x} + \sin \phi \del{\Psi}{y}
+\end{align*}
+and now we compute $\deln{\Psi}{R}{2}$.
+\begin{align*}
+\deln{\Psi}{R}{2} &= \cos \phi \left[\deln{\Psi}{x}{2} \del{x}{R} + \frac{\partial^2 \Psi}{\partial x \partial y}\del{y}{R} \right]+ \sin \phi \left[\frac{\partial^2 \Psi}{\partial x \partial y}\del{x}{R}+  \deln{\Psi}{y}{2}\del{y}{R}\right] \\
+&= \cos^2 \phi \deln{\Psi}{x}{2} + \sin^2\phi \deln{\Psi}{y}{2} + 2\cos \phi \sin \phi \frac{\partial^2 \Psi}{\partial x \partial y} \\
+&=
+\end{align*}
+We now focus on calculating $\del{\Psi}{\phi}$.
+\begin{align*}
+\del{\Psi}{\phi} &= \del{\Psi}{x}\del{x}{\phi} + \del{\Psi}{y}\del{y}{\phi} \\
+&= -R\sin \phi \del{\Psi}{x} + R\cos \phi \del{\Psi}{y}
+\end{align*}
+and now we calculate $\deln{\Psi}{\phi}{2}$.
+\begin{align*}
+\deln{\Psi}{\phi}{2} &= -R \cos \phi \del{\Psi}{x} - R\sin \phi \left[\deln{\Psi}{x}{2}\del{x}{\phi} + \frac{\partial^2 \Psi}{\partial x \partial y}\del{y}{\phi} \right] - R \sin \phi \del{\Psi}{y} + R \cos \phi \left[\frac{\partial^2 \Psi}{\partial x \partial y}\del{x}{\phi} + \deln{\Psi}{y}{2}\del{y}{\phi} \right] \\
+&= -R \cos \phi \del{\Psi}{x} -R \sin \phi \del{\Psi}{y} + R^2\sin^2 \deln{\Psi}{x}{2} + R^2\cos^2\phi \deln{\Psi}{y}{2} -2 R^2\cos \phi \sin \phi \frac{\partial^2 \Psi}{\partial x \partial y} \\
+\implies \frac{1}{R^2}\deln{\Psi}{\phi}{2} &= -\frac{1}{R}\left[\cos \phi \del{\Psi}{x} + \sin \phi \del{\Psi}{y} \right] + \sin^2 \phi \deln{\Psi}{x}{2} + \cos^2 \phi \deln{\Psi}{y}{2} - 2\cos \phi \sin \phi \frac{\partial^2 \Psi}{\partial x \partial y} \\
+&= -\frac{1}{R}\del{\Psi}{R} + \sin^2 \phi \deln{\Psi}{x}{2} + \cos^2 \phi \deln{\Psi}{y}{2} - 2 \cos \phi \sin \phi \frac{\partial^2 \Phi}{\partial x \partial y}
+\end{align*}
+If we now calculate the sum of $\deln{\Psi}{R}{2}$ and $\deln{\Psi}{\phi}{2}$, we have:
+\begin{align*}
+\frac{1}{R^2} \deln{\Psi}{\phi}{2} + \deln{\Psi}{R}{2} &= -\frac{1}{R}\del{\Psi}{R} + \deln{\Psi}{x}{2} + \deln{\Psi}{y}{2} \\
+\implies \frac{1}{R^2}\deln{\Psi}{\phi}{2} + \frac{1}{R}\del{\Psi}{R} + \deln{\Psi}{R}{2} &= \deln{\Psi}{x}{2} + \deln{\Psi}{y}{2}
+\end{align*}
+With the above, we have now calculated $\nabla^2$ in polar coordinates:
+$$
+\nabla^2 = \frac{1}{R^2}\deln{}{\phi}{2} + \frac{1}{R}\del{}{R} + \deln{}{R}{2}
+$$
+Note that for our system, $R$ is constant. Therefore, we can further simplify, giving us:
+$$
+\nabla^2 = \frac{1}{R^2}\deln{}{\phi}{2}
+$$
+as long as $R \neq 0$. We can now compute the Hamiltonian as:
+$$
+\hat{H} = -\frac{\hbar^2}{2m}\nabla^2 + V(\phi) = -\frac{\hbar^2}{2mR^2}\deln{}{\phi}{2} + V(\phi)
+$$
+which gives us the following Schroedinger Equation:
+\begin{align*}
+\hat H \Psi(\phi,t) = i\hbar\del{\Psi(\phi,t)}{t} \\
+-\frac{\hbar^2}{2mR^2}\deln{\Psi(\phi,t)}{\phi}{2} + V(\phi)\Psi(\phi,t) = i\hbar \Psi(\phi,t)
+\end{align*}
+\end{subanswer}
+
+\begin{subanswer}
+Note that by the problem statement, it appears to be that the potential is constant with respect to $\phi$ (ie, it does not change as the particle moves around the ring). We can therefore take $V(\phi) = 0$. Note furthermore that while the potential could very well depend on $R$, since $R$ does not change, we can always just leave it parametrized by $\phi$, giving us the above result.
+\end{subanswer}
+
+\begin{subanswer}
+While at first it might not seem obvious that boundary conditions exists, we do have one condition -- we wave function must ``match'' once it goes fully around the circle. Formally:
+$$
+\Psi(\phi, t) = \Psi(\phi + 2\pi, t)
+$$
+\end{subanswer}
+
+\begin{subanswer}
+Looking at the form of the time-independent SE:
+$$
+-\frac{\hbar^2}{2mR^2}\deln{\psi_n(\phi)}{\phi}{2} = E_n\Psi
+$$
+we immediately jump to the general solution for this PDE which in our case will be:
+$$
+\psi_n(\phi) = Ae^{\pm ik\phi}
+$$
+where $k^2 = \frac{2mR^2E_n}{\hbar^2}$. Then if we apply the boundary condition, note that the following must hold:
+$$
+e^{ik\phi} = e^{ik(\phi + 2\pi)} = e^{ik\phi}e^{2\pi ik}
+$$
+The above implies that $e^{2\pi i k} = 1$ which by Euler's formula is true if and only if $k \in \mathbb{Z}$ (when $\cos(2\pi k) = 1$). This gives eigenstates energies as:
+$$
+E_n = \frac{n^2 \hbar^2}{2mR^2}
+$$
+for $n \in \mathbb{Z}$.
+
+We continue now by attempting to normalize the wave function. Note that we're working in polar coordinates, therefore we have:
+\begin{align*}
+\int_{0}^{2\pi} |\psi(\phi)|^2 d\phi &= \int_0^{2\pi} e^{ik\phi}e^{-ik\phi} d \phi \\
+&= A^2 \int_{0}^{2\pi} d\phi \\
+&= 2\pi A^2 \\
+\end{align*}
+Therefore, in order for the above to be normalized, we require that:
+$$
+A = \frac{1}{\sqrt{2\pi}}
+$$
+This gives us the final eigenfunctions as:
+$$
+\psi_n(\phi) = \frac{1}{\sqrt{2\pi}}e^{in\phi}
+$$
+For $n \in \mathbb{Z}$. This gives us 2 states (degenerate) for each energy value $E_n$ where $n \neq 0$.
+\end{subanswer}
+\begin{subanswer}
+We now calculate the average values of the momentum and position operators, starting with the position operator. We focus on calculating the average value of the $\phi$ and then use the relation $s = R\phi$ to calculate the average ``position''.
+\begin{align*}
+\langle \phi \rangle &= \int_{0}^{2\pi} \phi |\psi_n(\phi)|^2 d\phi \\
+&= \frac{1}{2\pi}\int_0^{2\pi} \phi d\phi \\
+&= \frac{1}{2\pi} \left[\frac{\phi^2}{2}\biggr|_0^{2\pi} \right] \\
+&= \pi
+\end{align*}
+which gives an average $\langle s \rangle = \pi R$.
+
+Then the average momentum is given by:
+\begin{align*}
+\langle p \rangle &= -i\hbar \int_0^{2\pi} \psi_n(\phi)^* \del{}{\phi }\psi_n(\phi) d \phi \\
+&= -\frac{i\hbar (in)}{2\pi} \int_0^{2 \pi} d\phi \\
+&= \hbar n
+\end{align*}
+Therefore the average momentum for a given eigenstate is quantized as a multiple of $\hbar$ for $R = 1$.
+\end{subanswer}
+
+\begin{subanswer}
+We now create a superposition of the eigenstates with the same energy. Note that for any $n > 0$, we have two degenerate states which we an combine:
+\begin{align*}
+\psi_{|n|}(\phi) &= A \psi_n(\phi) + B \psi_{-n}(\phi)
+\end{align*}
+Note that each of these superpositions have angle parity, in this sense that $\psi(\phi)_{|n|} = \psi(\phi + 2\pi k)_{|n|}$ for all $k \in \mathbb{Z}$. If we wish for the superposition to be normalized, we simply need $A^2 + B^2 = 1$. If we look at the time evolution of this system, we have:
+\begin{align*}
+\psi_{|n|}(\phi, t) &= A \psi_n(\phi)e^{-i\hbar E_n t} + B \psi_{-n}(\phi)e^{-i\hbar E_n t} \\
+&= \psi_{|n|}(\phi)e^{-i \hbar E_n t}
+\end{align*}
+Note that the above implies that the wave function is seperable and therefore independent of time. We can verify this by nothing that:
+$$
+|\psi_{|n|}(\phi, t)|^2 = |\psi_{|n|}(\phi)|^2
+$$
+Therefore, the superposition is a stationary state since it does not vary with time.
+\end{subanswer}
+
+\begin{subanswer}
+We now calculate the average position and momentum operators for the superposition of states. First note that the normalized eigenfunctions are orthonormal. That is:
+$$
+\int_{0}^{2\pi} \psi_n(\phi)^* \psi_m(\phi) d\phi = \delta_{nm}
+$$
+This is because, for $m \neq n$:
+\begin{align*}
+\int_{0}^{2\pi} \psi_n(\phi)^* \psi_m(\phi) d\phi &= \frac{1}{2\pi}\int_{0}^{2\pi} e^{i(n-m)\phi} d\phi \\
+&= \frac{1}{2\pi} \left[\frac{1}{i(n-m)} e^{i(n-m)\phi}\biggr|_0^{2\pi} \right] \\
+&= \frac{1}{2\pi} \left[\frac{1}{i(n-m)} (\cos(2\pi (n-m)) + i\sin(2\pi (n-m)) - \cos(0) - i\sin (0) )\biggr|_0^{2\pi} \right] \\
+&= 0
+\end{align*}
+Note that the above is true because $\cos(2 \pi k) = \cos(0)$ and $\sin(2\pi k) = \sin(0)$. Therefore orthonormal holds, and now we can continue:
+\begin{align*}
+\langle \phi \rangle &= \int_0^{2\pi} \phi |\psi_{|n|}(\phi, t)|^2  d\phi \\
+&= \int_0^{2\pi} \phi |\psi_{|n|}(\phi)|^2 d\phi \\
+&= \int_0^{2\pi} \phi A^2 \left[|\psi_n(\phi)|^2 + A^*B\psi_n(\phi)^*\psi_{-n}(\phi) + AB^*\psi_{-n}(\phi)^*\psi_n(\phi) + B^2|\psi_{-n}(\phi)|^2\right] d \phi \\
+&= 2\pi(A^2 + B^2) + A^*B\int_0^{2\pi} \phi \psi_{n}(\phi)^*\psi_{-n}(\phi) d\phi + AB^*\int_0^{2\pi} \phi \psi_{-n}(\phi)^*\psi_{n}(\phi) d\phi \\
+&= 2\pi + AB\left[ \int_{0}^{2\pi} \phi e^{-2 i n \phi} d \phi+ \int_{0}^{2\pi} \phi e^{2 i n \phi} d\phi \right]\tag{we assume $A,B$ real} \\
+&= 2\pi + AB \left[ (-\frac{1}{2 i n}\phi e^{-2in\phi} + \frac{1}{2in}e^{-2in \phi})\biggr|_{0}^{2\pi} + (\frac{1}{2in}\phi e^{2in\phi} - \frac{1}{2in}e^{2in\phi})\biggr|_0^{2\pi} \right] \\
+&= 2\pi + AB\frac{\pi}{in}\left[e^{4\pi n i} - e^{-4\pi n i } \right] \\
+&= 2\pi + AB\frac{2\pi}{n}\sin(4 \pi n )  \\
+&= 2\pi
+\end{align*}
+We can now calculate the average momentum:
+\begin{align*}
+\langle p \rangle &= \int_0^{\pi} \psi_{|n|}(\phi)^*\del{}{\phi}\psi_{|n|}(\phi) d \phi \\
+&=\int_0^{\pi} \psi_{|n|}(\phi)^*\del{}{\phi}\psi_{|n|}(\phi) d \phi \\
+&= A^2 \int_0^{2\pi} \psi_n(\phi)^* \del{}{\phi} \psi_n(\phi) d \phi + B^2 \int_0^{2\pi} \psi_{-n}(\phi)^* \del{}{\phi} \psi_{-n}(\phi) d \phi \\
+&+ A^*B \int_0^{2\pi} \psi_n(\phi)^* \del{}{\phi} \psi_{-n}(\phi) d \phi + AB^* \int_0^{2\pi} \psi_{-n}(\phi)^* \del{}{\phi} \psi_n(\phi) d \phi   \\
+&= (A^2 - B^2)hn
+\end{align*}
+Note that the we are able to drop the cross terms in the integrals because the eigenfunctions are orthonormal and taking the derivative simply results in $c_1 \psi_m(\phi)$. Furthermore, note that the average momentum is exactly $0$ when we have:
+$$
+A^2 = B^2
+$$
+which occurs if and only if $A = B = \frac{1}{\sqrt{2}}$. Therefore we have that the momentum is some combination of the two waves, each in opposite directions. When they balance out, the momentum is precisely $0$, otherwise we have a momentum in one direction.
+\end{subanswer}
+\end{answer}
+
+\begin{answer}
+\begin{subanswer}
+We present the proof for $[AB,C] = A[B,C] + [A,C]B$.
+\begin{align*}
+A[B,C] + [A,C]B &= A(BC - CB) + (AC - CA)B \\
+&= ABC - ACB + ACB - CAB \\
+&= ABC - CAB \\
+&= [AB,C]
+\end{align*}
+\end{subanswer}
+
+\begin{subanswer}
+The answer follows immediately from part (c) where we set $f(x) = x^n$ so that $f'(x) = nx^{n-1}$. Therefore, by (c), we have:
+$$
+[x^n, p] = i\hbar nx^{n-1}
+$$
+Note that $n \neq 1$.
+\end{subanswer}
+
+\begin{subanswer}
+We present the general proof that $[f(x), p] = i\hbar \frac{df}{dx}$ for any function on operator $x$. Let us apply the operator to arbitrary $\Psi(x,t)$ for clarity:
+\begin{align*}
+[f(x), p]\Psi(x,t) &= -i\hbar f(x)\frac{\partial}{\partial x}\Psi(x,t) + i\hbar \frac{\partial}{\partial x}[f(x)\Psi(x,t)] \\
+&= i\hbar \left[ -f(x)\frac{\partial}{\partial x}\Psi(x,t) + \frac{df}{dx}\Psi(x,t) + f(x)\frac{\partial}{\partial x} \Psi(x,t) \right] \\
+&= i\hbar\frac{df}{dx}\Psi(x,t)
+\end{align*}
+Therefore, the operator $[f(x), p] = i\hbar \frac{df}{dx}$.
+\end{subanswer}
+\end{answer}
+
+\begin{answer}
+\begin{subanswer}
+According to Griffith, we can interpret the state of the system immediately after the measurement of $a_1$ as the system collapsing into the state whose eigenvalue is $a_1$. That is, immediately after the measurement of $a_1$, the system is in the eigenstate:
+$$
+|a_1\rangle = \frac{3}{5}|b_1 \rangle + \frac{4}{5} |b_2 \rangle
+$$
+\end{subanswer}
+
+\begin{subanswer}
+Given that $a_1$ was measured and the system has collapsed into the eigenstate given in (a), the probabilities for the measurement for $B$ are:
+\begin{align*}
+\Pr[B = b_1] &= \frac{9}{25} \\
+\Pr[B = b_2] &= \frac{16}{25}
+\end{align*}
+\end{subanswer}
+
+\begin{subanswer}
+We consider two possibilities. The phrasing of the question is somewhat ambiguous, so on the first possibility we assume that these measurements ($B$ followed by $A$) occur on a fresh system. In this scenario, since we don't know the results of measurement for $B$, we cannot say anything about the probability of getting $a_1$. We have no idea what the overall $\Psi = c_1|a_1 \rangle + c_2 | a_2 \rangle$ equation entails.
+
+In the second scenario, we assume that we take a fresh system, measure $A$ and get $a_1$, then measure $B$, then take a second measurement of $A$. In this case, due to the wave function collapse on the first measurement of $A$, the resulting measurement for $A$ will be $a_1$ with $100\%$ certainty. It has been determined.
+\end{subanswer}
+
+\begin{subanswer}
+Again, we now take two approaches. If this is a repeated measurement of $A$, then knowing that the first result was $a_1$, the second measurement will be $a_1$ with probability $1$.
+
+In the second scenario, however, we have something a bit more interesting. If we measure $B$ on a fresh system and receive the results $b_1$, it can be shown with some algebraic manipulation, that the system is in one of the following eigenstates:
+\begin{align*}
+|b_1 \rangle = \frac{3}{5}|a_1 \rangle + \frac{4}{5} | a_2 \rangle \\
+|b_2 \rangle = \frac{4}{5}|a_1 \rangle - \frac{3}{5}| a_2 \rangle
+\end{align*}
+Knowing that the first measurement of $B$ was $b_1$ now tells use that the measurement of $A$ will be distributed with the following probabilities:
+\begin{align*}
+\Pr[A = a_1] &= \frac{9}{25}\\
+\Pr[A = a_2] &= \frac{16}{25}
+\end{align*}
+\end{subanswer}
+\end{answer}
+
+\begin{answer}
+We first approach this problem using the standard bracket notation and the verify the results by actually walking through the matrix multiplications. Given the information, we have the following:
+\begin{align*}
+A &= | \delta \rangle \langle \epsilon |\\
+A^{\dag} &= | \epsilon \rangle \langle \delta |\\
+B^{\dag} &= | \beta \rangle \langle \gamma | \\
+B &= |\gamma \rangle \langle \beta |
+\end{align*}
+With the above, we now compute the result:
+\begin{align*}
+\langle \gamma | B^2 A^{\dag} | \delta \rangle^* &= (\langle \gamma | \gamma \rangle \langle \beta | \gamma \rangle \langle \beta | \epsilon \rangle \langle \delta | \delta \rangle)^* \\
+&= \langle \beta | \gamma \rangle^* \langle \beta | \epsilon \rangle^* \\
+&= \langle \gamma | \beta \rangle \langle \epsilon | \beta \rangle
+\end{align*}
+Another equivalent approach is the following, where we use the fact that $(XY)^{\dag} = Y^{\dag}X^{\dag}$ and that $\langle \gamma | X | \delta \rangle^* = \langle \delta | X^{\dag} | \gamma \rangle$.
+\begin{align*}
+\langle \gamma | B^2 A^{\dag} | \delta \rangle^* &= \langle \delta | AB^{\dag}B^{\dag} | \gamma \rangle \\
+&= \langle \delta | \delta \rangle \langle \epsilon | \beta \rangle \langle \gamma | \beta \rangle \langle \gamma | \gamma \rangle \\
+&= \langle \epsilon | \beta \rangle \langle \gamma | \beta \rangle
+\end{align*}
+We obtain the same result as before.
+
+We now consider treating each element as if it were in a matrix, just so that we can verify our answers from before. We expand the element directly, one step at a time. We consider the case where we have an orthonormal basis (our eigenfunctions) and so we can represent the states as:
+\begin{align*}
+\gamma = \sum_{i=1}^n \gamma_i |i \rangle \\
+\delta = \sum_{i=1}^n \delta_i |i \rangle
+\end{align*}
+where $|i\rangle$ is an eigenstates for $i \in \{1, 2, \cdots, n \}$. We begin by first computing $B^2$ from $B$. Note that given that $B^{\dag}$, we have:
+$$
+B_{ij} = (\langle j | \beta \rangle \langle i | \gamma \rangle)^*
+$$
+and therefore we have:
+$$
+(B^2)_{ij} = \sum_{k=1}^{n} (\langle k | \beta \rangle \langle \gamma | i \rangle \langle j | \beta \rangle \langle \gamma | k \rangle)^*
+$$
+and the together with the definition for $A^{\dag}$ we have:
+\begin{align*}
+(B^2A^{\dag})_{ij} =& \sum_{k=1}^{n} (B^2)_{ik}A^{\dag}_{kj} \\
+&= \sum_{k=1}^n  \sum_{m=1}^{n} (\langle m | \beta \rangle \langle \gamma | i \rangle \langle k | \beta \rangle \langle \gamma | m \rangle \langle j | \delta \rangle \langle \epsilon | k \rangle)^* \\
+\end{align*}
+Once we have the above, we're almost done. We just need to rewrite the final element:
+\begin{align*}
+\langle \gamma | B^2 A^{\dag} | \delta \rangle^* &= \sum_{i=1}^{n}\sum_{j=1}^{n} \sum_{k=1}^n  \sum_{m=1}^{n}  \langle i | \gamma \rangle^*  \langle m | \beta \rangle \langle \gamma | i \rangle \langle k | \beta \rangle \langle \gamma | m \rangle \langle j | \delta \rangle \langle \epsilon | k \rangle \langle \delta | j \rangle^* \\
+&= \sum_{i=1}^{n}\sum_{j=1}^{n} \sum_{k=1}^n  \sum_{m=1}^{n}  |\langle i | \gamma \rangle |^2 |\langle j | \delta \rangle|^2 \langle m | \beta \rangle
+\langle k | \beta \rangle \langle \gamma | m \rangle \langle \epsilon | k \rangle \\
+&= \sum_{i=1}^{n}\sum_{j=1}^{n}\sum_{k=1}^{n}\sum_{m=1}^{n}|\gamma_i|^2 |\delta_j|^2 \beta_m \beta_k \gamma_m \epsilon_k \\
+&= \underbrace{\sum_{i=1}^n |\gamma_i|^2}_{\text{unit length}} \underbrace{\sum_{j=1}^n |\delta_j|^2}_{\text{unit length}} \underbrace{\sum_{k=1}^n \beta_k \epsilon_k}_{\text{inner product}} \underbrace{\sum_{m=1}^n \beta_m \gamma_m}_{\text{inner product}} \\
+&= \langle \epsilon| \beta \rangle \langle \gamma|  \beta \rangle
+\end{align*}
+\end{answer}
+\end{document}

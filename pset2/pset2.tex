@@ -1,0 +1,486 @@
+% @Author: Luis Perez
+% @Date:   2016-02-02 21:09:55
+% @Last Modified by:   luis
+% @Last Modified time: 2016-02-12 17:50:50
+
+\documentclass[12pt]{article}
+\usepackage{latexsym}
+\usepackage{fancyhdr}
+\usepackage{amssymb,amsmath,amsthm}
+\usepackage[pdftex]{graphicx}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\usepackage[margin=1in]{geometry}
+
+
+% Create answer counter to keep track of seperate responses
+\newcounter{AnswerCounter}
+\newcounter{SubAnswerCounter}
+\setcounter{AnswerCounter}{1}
+\setcounter{SubAnswerCounter}{1}
+
+% Create answer environment which uses counter
+\newenvironment{answer}[0]{
+  \setcounter{SubAnswerCounter}{1}
+  \bigskip
+  \textbf{Solution \arabic{AnswerCounter}}
+  \\
+  \begin{small}
+}{
+  \end{small}
+  \stepcounter{AnswerCounter}
+}
+
+\newenvironment{subanswer}[0]{
+  (\alph{SubAnswerCounter})
+}{
+ \bigskip
+  \stepcounter{SubAnswerCounter}
+}
+
+% Allows easy use of vectors
+\newcommand{\vect}[1]{\vec{\boldsymbol{#1}}}
+
+
+% Custom Header information on each page
+\pagestyle{fancy}
+\lhead{HUID: 70871564}
+\rhead{Luis Perez - \thepage}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}}   % Horizontal rule
+
+\title{
+    % \vspace{-1in}
+    \usefont{OT1}{bch}{b}{n}
+    \normalfont \normalsize \textsc{Harvard University} \\ [25pt]
+    \horrule{0.5pt} \\[0.4cm]
+    \huge Physics 143a: Quantum Mechanics I \\ [20pt]
+    \normalfont \normalsize Problem Set 2
+    \horrule{2pt} \\[0.5cm]
+}
+\author{
+    \normalfont                 \normalsize
+        Luis Antonio Perez\\[-3pt]    \normalsize
+}
+\date{\today}
+
+\begin{document}
+\maketitle
+\pagebreak
+
+\begin{answer}
+\begin{subanswer}
+We show that we can normalize the Gaussian Wave Packet by formally calculating the limit of the function $G(R)$ as $R \to \infty$:
+\begin{align*}
+G(R) = \int_{-R}^R |\psi(x,0)|^2 dx
+\end{align*}
+We do this be considering $G(R)^2$ and using the Squeeze Theorem to find the integral. We have:
+\begin{align*}
+G(R)^2 &= \int_{-R}^R |\psi(x,0)|^2 dx \int_{-R}^R |\psi(y,0)|^2 dy \\
+&= \int_{-R}^R A^2e^{\frac{-x^2}{L^2}} \int_{-R}^R A^2e^{\frac{-y^2}{L^2}} dy \\
+&= A^4 \int \int_D e^{-\frac{(x^2 + y^2)}{L^2}} dx dy
+\end{align*}
+We transform the above double integral into a surface integral in polar coordinates, upper-bounding the square surface with a circle of radius $R\sqrt{2}$ and lower-bounding it with a circle of radius $R$.:
+$$
+A^4 \int_0^{2\pi} \int_0^{R} re^{-\frac{r^2}{L^2}} dr d\theta \leq G(R)^2 \leq A^4 \int_0^{2\pi} \int_0^{R\sqrt{2}} re^{-\frac{r^2}{L^2}} dr d\theta
+$$
+We can directly integrate the two sides:
+\begin{align*}
+2\pi A^4 \int_0^{R} re^{-\frac{r^2}{L^2}} dr &\leq G(R)^2 \leq 2\pi A^4 \int_0^{R\sqrt{2}} re^{-\frac{r^2}{L^2}} dr \\
+L^2\pi A^4 [-e^{-\frac{r^2}{L^2}}]\big|_0^R &\leq G(R)^2 \leq L^2\pi A^4 [-e^{-\frac{r^2}{L^2}}]\big|_0^{R\sqrt{2}}
+\end{align*}
+Now taking the limit as $R \to \infty$:
+\begin{align*}
+\lim_{R\to \infty} L^2\pi A^4 [-e^{-\frac{r^2}{L^2}}]\big|_0^R &\leq \lim_{R\to \infty} G(R)^2 \leq \lim_{R\to \infty} L^2\pi A^4 [-e^{-\frac{r^2}{L^2}}]\big|_0^{R\sqrt{2}} \\
+L^2\pi A^4 &\leq \lim_{R\to \infty} G(R)^2 \leq L^2\pi A^4
+\end{align*}
+Note that by the above, our integral exists and is finite. Therefore we can take the square root and applying the Squeeze Theorem:
+$$
+\lim_{R \to \infty} G(R) = A^2L\sqrt{\pi}
+$$
+Therefore, if we wish to normalize $\lim_{R \to \infty} G(R)$, then we must take:
+$$
+A = \frac{1}{\sqrt{L\sqrt{\pi}}}
+$$
+where we take $A$ to be real.
+\end{subanswer}
+
+\begin{subanswer}
+The probability density function is given by:
+$$
+D(x) = |\psi(x,0)|^2 = \frac{1}{L\sqrt{\pi}}e^{\frac{-x^2}{L^2}}
+$$
+We focus first on finding the point positive values $x_m > 0$ for which the probability density function is at half-maximum. Then note that by the evenness of $|\psi(x,0)|^2$, the full-lenght is simply $2x_m$. The maximum of a Gaussian Wave Packet occurs at its center, which in our case is $x = 0$. Therefore, we're looking to solve:
+\begin{align*}
+\frac{1}{L\sqrt{\pi}} e^{\frac{-x^2}{L^2}} &= \frac{1}{2L\sqrt{\pi}} \\
+\implies e^{\frac{-x^2}{L^2}} &= \frac{1}{2} \\
+\implies x_m &= L^2 \ln 2
+\end{align*}
+Therefore, the FWHM is given by $2L^2 \ln2$
+\end{subanswer}
+
+\begin{subanswer}
+We use the given equation to perform a Fourier transform on the wave packet. However, we first recall the following fact from section:
+\begin{align*}
+\int_{-\infty}^{\infty} e^{-\alpha x^2 - \beta x - \gamma} dx = e^{-\gamma}\sqrt{\frac{\pi}{\alpha}}e^{\frac{\beta^2}{4\alpha}}
+\end{align*}
+Using the above fact, we have:
+\begin{align*}
+\phi(k,0) &= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^{\infty} \frac{1}{\sqrt{L\sqrt{\pi}}} e^{\frac{-x^2}{2L^2}}e^{ik_0x}e^{-ikx} dx\\
+&= \frac{1}{\sqrt{2\pi L \sqrt{\pi}}} \int_{-\infty}^{\infty}e^{-\frac{1}{2L^2}x^2 - i(k - k_0)x} dx\\
+&= \frac{1}{\sqrt{2\pi L \sqrt{\pi}}} \left[L\sqrt{2\pi}e^{\frac{-L^2(k-k_0)^2}{2}}\right] \\
+&= \frac{\sqrt{L}}{\sqrt[4]{\pi}} e^{\frac{-[L(k-k_0)]^2}{2}}
+\end{align*}
+where we used the integral from section as with the substitutions $\alpha = \frac{1}{2L^2}$, $\beta = i(k - k_0)$, and $\gamma = 0$.
+\end{subanswer}
+
+\begin{subanswer}
+To normalize the above integral, we need to find a constant $B$ real such that for $\phi'(k,0) = B\phi(k,0)$, we have:
+$$
+\int_{-\infty}^{\infty} |\phi'(k,0)|^2 dk = 1
+$$
+Calculating this integral, we have:
+\begin{align*}
+\int_{-\infty}^{\infty} |\phi'(k,0)|^2 dk &= \frac{B^2 L}{\sqrt{\pi}} \int_{-\infty}^{\infty} e^{-[L(k-k_0)]^2} dk \\
+&= \frac{LB^2}{\sqrt{\pi}} \frac{\sqrt{\pi}}{L} \\
+&= B^2
+\end{align*}
+Therefore, we need $B = 1$ as the normalizing constant. The function is already normalized.
+\end{subanswer}
+
+\begin{subanswer}
+The answer is rather long, so we focus on making some small steps. First, we calculate and simplify $\psi(x,t)$. Recall that by the Fourier Transform:
+$$
+\psi(x,t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{ikx} \phi(k,t)
+$$
+Then note that by the part above:
+$$
+\phi(k,t) = e^{-\frac{i}{\hbar}E t}\phi(k,0)
+$$
+Merging the two functions, we have:
+\begin{align*}
+\psi(x,t) &= \frac{1}{\sqrt{2\pi}} \int_{-\infty}^{\infty} e^{i[kx - \frac{E}{\hbar}t]} \phi(k,0) dk\\
+&= \frac{\sqrt{L}}{\sqrt{2\pi\sqrt{\pi}}} \int_{-\infty}^{\infty}e^{i[kx - \frac{E}{\hbar}t]} e^{-\frac{[L(k-k_0)]^2}{2}} dk
+\end{align*}
+Now we make the following substitutions:
+\begin{align*}
+  k' &= k-k_0 \\
+  kx - \frac{E}{\hbar}t &= (k' + k_0)x - \frac{\hbar(k' + k_0)^2}{2m}t \\
+  &= -k'^2 \frac{\hbar t}{2m} + k'(x - \frac{\hbar k_0t}{m}) + k_0x - \frac{\hbar k_0^2}{2m}t
+\end{align*}
+. Also note that $\frac{E_0}{\hbar}= \frac{\hbar k_0^2}{2m}$ and obtain the following where we take the constants out of the integral:
+\begin{align*}
+\psi(x,t) &= \frac{\sqrt{L}}{\sqrt{2\pi\sqrt{\pi}}}e^{i(k_0x - \frac{E_0}{\hbar} t)} \int_{-\infty}^{\infty} e^{i[-k'^2 \frac{\hbar t}{2m} + k'(x- \frac{\hbar  k_0 t}{m})]}e^{\frac{-L^2k'^2}{2}} dk'\\
+&=  \frac{\sqrt{L}}{\sqrt{2\pi\sqrt{\pi}}}e^{i(k_0x - \frac{E_0}{\hbar} t)}\int_{-\infty}^{\infty} e^{-\frac{k'^2}{2}\left(L^2 + i\frac{\hbar t}{m}\right)} e^{ik'(x - \frac{\hbar k_0t}{m})} dk' \\
+&= \frac{\sqrt{L}}{\sqrt{2\pi\sqrt{\pi}}}e^{i(k_0x - \frac{E_0}{\hbar} t)}\int_{-\infty}^{\infty} e^{-\frac{k'^2}{2}\left(L^2 + i\frac{\hbar t}{m}\right) + ik'(x - \frac{\hbar k_0t}{m})} dk'
+\end{align*}
+Note that the above integral can be simplified using the results from section, where we take $\alpha = \frac{L^2}{2} + i \frac{\hbar t}{2m}$ and $\beta = -i(x-\frac{\hbar k_0 t}{m})$, which gives us:
+\begin{align*}
+\psi(x,t) &= \frac{\sqrt{L}}{\sqrt{2\pi\sqrt{\pi}}}e^{i(k_0x - \frac{E_0}{\hbar} t)} \left[\sqrt{\frac{\pi}{\frac{L^2}{2} + i \frac{\hbar t}{2m}}} e^{-\frac{(x - \frac{\hbar k_0 t}{m})^2}{4[\frac{L^2}{2} + i \frac{\hbar t}{2m}]}} \right] \\
+&= \frac{\sqrt{L}}{\sqrt{2\pi\sqrt{\pi}}}e^{i(k_0x - \frac{E_0}{\hbar} t)} \left[\sqrt{\frac{\pi}{\frac{L^2}{2}(1 + i \frac{\hbar t}{mL^2})}} e^{-\frac{(x - \frac{\hbar k_0 t}{m})^2}{2L^2[1 + i \frac{\hbar t}{2mL^2}]}} \right] \\
+&= \sqrt{\frac{1}{L\sqrt{\pi}(1 + i \frac{\hbar t}{mL^2})}} e^{i(k_0x - \frac{E_0}{\hbar} t)} \left[e^{-\frac{(x - \frac{\hbar k_0 t}{m})^2}{2L^2[1 + i \frac{\hbar t}{2mL^2}]}} \right]
+\end{align*}
+Now that we've calculated the above, we can focus on calculating the absolute of the square function:
+\begin{align*}
+|\psi(x,t)|^2 &= \psi(x,t)*\psi(x,t) \\
+&= \frac{1}{\sqrt{\pi} L\sqrt{(1 + i\frac{\hbar t}{2mL^2})(1 - i\frac{\hbar t}{2mL^2})}}e^{-\frac{(x - \frac{\hbar k_0 t}{m})^2}{2L^2}[\frac{1}{[1 + i \frac{\hbar t}{2mL^2}]} + \frac{1}{[1 - i \frac{\hbar t}{2mL^2}]}]} \\
+&= \frac{1}{\sqrt{\pi} L\sqrt{(1 + i\frac{\hbar t}{2mL^2})(1 - i\frac{\hbar t}{2mL^2})}}e^{-\frac{(x - \frac{\hbar k_0 t}{m})^2}{2L^2}[\frac{1}{[1 + i \frac{\hbar t}{2mL^2}][1 - i \frac{\hbar t}{2mL^2}]}]} \\
+&= \frac{1}{\sqrt{\pi} L\sqrt{1 + \left(\frac{\hbar t}{m L^2}\right)^2}}e^{-\frac{(x - \frac{\hbar k_0 t}{m})^2}{2L^2}[\frac{1}{1 + \left(\frac{\hbar t}{m L^2}\right)^2}]}  \\
+&= \frac{1}{\sqrt{\pi}}L(t) e^{-\left(\frac{(x - \frac{\hbar k_0 t}{m})}{L(t)} \right)^2}
+\end{align*}
+where we've set:
+$$
+L(t) = L\sqrt{1 + \left(\frac{\hbar t}{m L^2}\right)^2}
+$$
+\end{subanswer}
+
+\begin{subanswer}
+We note that the probability density function from above $|\psi(x,t)|^2$ is still in the form of a Gaussian Wave Packet with a new center given by $\frac{\hbar k_0 t}{m}$. Therefore, we see that it still represent a particle that moves classically with time. However, note that the standard deviation of the wave packet is given by:
+$$
+\frac{L}{\sqrt{2}}\sqrt{1 + \left(\frac{\hbar t}{mL^2}\right)^2} = \frac{1}{mL\sqrt{2}}\sqrt{(mL^2)^2 + (\hbar t)^2}
+$$
+which increases with time. Therefore, the wave packet becomes more spread out as time passes. Note if time goes
+from $t$ to $\sqrt{4t^2 + \frac{3(mL^2)^2}{\hbar^2}}$, we have the doubling of the length occurs. For example, if $t = 0$, then at $t = \frac{mL^2\sqrt{3}}{\hbar}$, we have the standard deviation of the wave packet as:
+\begin{align*}
+\frac{L}{\sqrt{2}}\sqrt{1 + \sqrt{3}^2} &= \frac{2L}{\sqrt{2}}
+\end{align*}
+which is twice the standard deviation at $t = 0$ given by:
+$$
+\frac{L}{\sqrt{2}}
+$$
+\end{subanswer}
+\end{answer}
+
+\begin{answer}
+\begin{subanswer}
+Suppose we have a set of classical measurements $\{m_i\}_{i=1}^{n}$. Then the variance is given by:
+$$
+Var(\{m_i\}) = \frac{1}{n} \sum_{i=1}^n (m_i - \mu)^2
+$$
+where $\mu$ is the mean and is given by:
+$$
+\mu = \frac{1}{n}\sum_{i=1}^n m_i
+$$
+and furthermore, the standard deviation is:
+$$
+SD(\{m_i\}) = \sqrt{Var(\{m_i\})} = \frac{1}{\sqrt{n}}\sqrt{\sum_{i=1}^n (m_i - \mu^2)}
+$$
+The above generalize easily to the continuous case. Suppose we have a space over which we take continuous measurements with probability density $p_m(m)$, then the mean is given by:
+$$
+\mu = \int m p_m(m) dm
+$$
+and the variance is given by:
+$$
+Var(M) = \int p_m(m) (m - \mu)^2 dm
+$$
+The results are similar to just letting our measurements be a random variable.
+
+\end{subanswer}
+
+\begin{subanswer}
+The claim simplifies to the below:
+\begin{align*}
+\langle (A_{op} - \langle A_{op} \rangle) ^2 \rangle &= \langle A_{op}^2 - 2A_{op}\langle A_{op} \rangle + \langle A_{op} \rangle^2 \rangle \\
+&= \int dx |\psi(x,t)|^2 (A_{op}^2 - 2A_{op}\langle A_{op} \rangle + \langle A_{op} \rangle^2) \\
+&= \int dx |\psi(x,t)|^2 A_{op}^2 - 2 \langle A_{op} \rangle  \int dx |\psi(x,t)|^2 A_{op} + \langle A_{op} \rangle^2 \int dx |\psi(x,t)|^2 dx \\
+&= \langle A_{op}^2 \rangle - 2 \langle A_{op} \rangle \langle A_{op} \rangle + \langle< A_{op}>^2 \\
+&= \langle A_{op}^2 \rangle - \langle A_{op} \rangle^2
+\end{align*}
+Then note that by the above, we have:
+$$
+\Delta A \equiv \sqrt{\langle (A_{op} - \langle A_{op} \rangle) ^2 \rangle} = \sqrt{\langle A_{op}^2 \rangle - \langle A_{op} \rangle^2}
+$$
+\end{subanswer}
+
+\begin{subanswer}
+From the above part, we have already calculated the result of $|\psi(x,t)|^2$. From there, we can see by inspection that the Gaussian distribution is centered at:
+$$
+\langle x_{op} \rangle = \frac{\hbar k_0 t}{m}
+$$
+As for the average value of the square, note that we have:
+$$
+(\Delta A)^2 = \langle A^2_{op} \rangle - \langle A_{op}\rangle ^2
+$$
+Note that by inspection on the Gaussian Wave Packet, we can see that:
+$$
+(\Delta x)^2 = \frac{L^2}{2}[1  + \left(\frac{\hbar t}{mL^2}\right)^2]
+$$
+Therefore, we have:
+$$
+\langle x_{op}^2 \rangle = \frac{L^2}{2}[1  + \left(\frac{\hbar t}{mL^2}\right)^2] + \frac{\hbar k_0 t}{m}
+$$
+The above answer the three questions presented in this subproblem.
+\end{subanswer}
+
+\begin{subanswer}
+Note that we expect the momentum to not change with time, as there are no forces acting on the system (there'd be something wrong with quantum if this was the case!). Therefore, by inspection of $|\phi(k,0)|^2$ we should be able to obtain the mean ($\langle p_{op} \rangle$) and variance $\Delta p_{op}$ of the momentum, from which we can derive $\langle p_{op} \rangle$. Recall:
+$$
+\phi(k,0) = \frac{L}{\sqrt[4]{\pi}}e^{\frac{-[L(k-k_0)^2]}{2}}
+$$
+Then note that by inspection, the center or mean of the Gaussian distribution is $k_0 = \frac{p_0}{\hbar}$. Therefore, we expect that $\langle p_{op} \rangle = k_0 \hbar$. Similarly, by inspection of the distribution, the variance is $\frac{1}{\L \sqrt{2}}$, so we expect the RMS uncertainty to be:
+$$
+\Delta \langle p_{op} \rangle = \frac{\hbar}{L \sqrt{2}}
+$$
+Note that we do not expect the above to change with time. This leads us to the conclusion that:
+$$
+\langle p_{op}^2 \rangle = \frac{\hbar}{L\sqrt{2}} + k_0\hbar
+$$
+\end{subanswer}
+\begin{subanswer}
+The uncertainty product as a function of time is:
+\begin{align*}
+\Delta x \Delta p &= \frac{L}{\sqrt{2}}[1 + \left(\frac{\hbar t}{mL^2} \right)^2] \frac{\hbar}{L \sqrt{2}} \\
+&= \frac{\hbar}{2}[1 + \left(\frac{\hbar t}{mL^2} \right)^2]
+\end{align*}
+which, in particular, implies that at time $t = 0$:
+$$
+\Delta x_0 \Delta p_0 = \frac{\hbar}{2}
+$$
+and as $t$ increases, the uncertainty also increases.
+\end{subanswer}
+
+\begin{subanswer}
+We define ``spreads appreciably'' as the standard deviation increasing beyond $cL$ for some large constants $c$. For concreteness, we can think of $c = 10$ or something like that. In this case, the standard deviation has become much larger than the original standard deviation which is given by $\frac{L}{\sqrt{2}}$. In particular, it has grown by a factor of $c\sqrt{2}$. In order for this to occur, we must have a total of:
+$$
+t = \frac{mL^2}{\hbar}\sqrt{2c^2 - 1}
+$$
+In that case, note that the standard deviation becomes:
+$$
+\frac{L}{\sqrt{2}} \sqrt{1 + \left(\sqrt{2c^2-1} \right)^2} = cL
+$$
+The next question to answer is how far the particle travels in this time. We know the group velocity is $\frac{\hbar k}{m}$, so we would have particle travel a total of:
+$$
+\frac{\hbar k}{m}\frac{mL^2}{\hbar}\sqrt{2c^2 - 1} = kL^2\sqrt{2c^2 - 1}
+$$
+How much is this in terms of the standard deviation at $t = 0$ (which is what I'm defining to be the width of the gaussian system due to symmetry). Then recall that at $t = 0$, the standard deviation is $\frac{L}{\sqrt{2}}$. This means that we've travelled a total of:
+$$
+\frac{kL\sqrt{4c^2 - 2}}{2}
+$$
+$t = 0$ widths before the Gaussian wave packet depreciates significantly (ie, by a factor of $c$). Following a similar process, we know that the wavelength of the particle is given by $\lambda = \frac{2\pi}{k}$. Then the number of wavelenths that it must travel is:
+$$
+\frac{k^2L^2\sqrt{2c^2 -1}}{2\pi}
+$$
+The end :)
+\end{subanswer}
+\end{answer}
+
+\begin{answer}
+For this problem, we attempt to follow the presentation in Griffith for solving the Harmonic Oscillator. We begin by stating the time-independent SE for our system:
+$$
+-\frac{\hbar^2}{2m} \frac{\partial^2}{\partial x^2} \psi_E(x) + \frac{1}{2}m \omega^2 x^2 = E\psi_E(x)
+$$
+\begin{subanswer}
+In addition to $x,t$ we have the parameters $w$ and $E$. Our purpose will be to find the allowed values of $E$ according to SE. We first begin by simplifying the equation as much as possible so as to collect the parameters. Begin by multiplying both sides by $\frac{2}{\hbar \omega}$. We then get:
+$$
+-\frac{\hbar}{m \omega} \frac{\partial^2}{\partial x^2} \psi_E(x) + \frac{m \omega}{\hbar}  x^2 = \frac{2E}{\hbar \omega}\psi_E(x)
+$$
+Then making the substitution $\epsilon = \sqrt{\frac{m \omega}{\hbar}}x$ and nothing that $\partial \epsilon^2 = \frac{m \omega}{\hbar} \partial x^2$:
+$$
+\frac{\partial^2}{\partial \epsilon^2} \psi_E = (\epsilon^2 - K) \psi_E
+$$
+where $K = \frac{2E}{\hbar \omega}$. Note that this is a much simpler differential equation to solve.
+\end{subanswer}
+
+\begin{subanswer}
+We begin by taking note of the behavior of the function $x$ becomes larger. In this scenario, $\epsilon$ becomes large and we have:
+$$
+\frac{\delta^2}{\delta \epsilon^2} \psi_E \approx \epsilon^{2}\psi_E
+$$
+which we know to have the solution:
+$$
+\psi_E(\epsilon) = Ae^{-\epsilon^2 / 2} + Be^{\epsilon^2 / 2}
+$$
+Note that the second term blows up to infinity as $\epsilon$ gets large, which means the wave function would not be
+normalizable. Therefore, $B = 0$ in any normalizable solution. The above suggests a solution of the form:
+$$
+\psi_E(\epsilon) = h_E(\epsilon)e^{-\epsilon^2 / 2}
+$$
+\end{subanswer}
+\begin{subanswer}
+Now we tackle the challenge of solving for $h_E$.Differentiating twice with respect to $\epsilon$, we arrive at:
+\begin{align*}
+\frac{\partial}{\partial \epsilon}\psi_E &= [\frac{\partial}{\partial \epsilon} h_E - \epsilon h_E]e^{\epsilon^2/2} \\
+\frac{\partial^2}{\partial \epsilon^2}\psi_E &= [\frac{\partial^2 h_E}{\partial \epsilon^2} - h_E - 2\epsilon \frac{\partial h_E}{\partial \epsilon} - \epsilon^2 h_E]e^{\epsilon^2/2} \\
+&= [\frac{\partial^2 h_E}{\partial \epsilon^2} - 2\epsilon \frac{\partial h_E}{\partial \epsilon} - (\epsilon^2-1) h_E]e^{\epsilon^2/2}
+\end{align*}
+Plugging the above in to the differential equation, we have:
+\begin{align*}
+[\frac{\partial^2 h_E}{\partial \epsilon^2} - 2\epsilon \frac{\partial h_E}{\partial \epsilon} - (\epsilon^2-1) h_E]e^{\epsilon^2/2} = (\epsilon^2 - K) \psi_E \\
+\implies [\frac{\partial^2 h_E}{\partial \epsilon^2} - 2\epsilon \frac{\partial h_E}{\partial \epsilon} - (K-1) h_E] = 0
+\end{align*}
+We can attempt a solution at this equation by using a Taylor series expansion for $h_E$. Recall that for any well-behaved and nice function $h_E$:
+$$
+h_E(\epsilon) = \sum_{j=0}^{\infty} a_j\epsilon^j
+$$
+for some constants $a_j$. We now differentiate term by term to arrive at:
+$$
+\frac{\partial h_E}{\partial \epsilon} = \sum_{j=0}^{\infty} ja_j \epsilon^{j-1}
+$$
+and
+$$
+\frac{\partial^2 h_E}{\partial \epsilon^2} = \sum_{j=1}^{\infty} j(j-1)a_i \epsilon^{j-2} = \sum_{j=2}^{\infty} j(j-1)a_i\epsilon^{j-2} = \sum_{j=0}^{\infty} (j+1)(j+2)a_{j+2}\epsilon^j
+$$
+
+Then putting the equations together into the differential equation, we have:
+$$
+\sum_{j=0}^{\infty} [(j+1)(j+2)a_{j+2} - 2ja_j - (K-1)a_j]\epsilon^j = 0
+$$
+The only way the above can hold for large enough $\epsilon$ is if each coefficient is $0$. Therefore:
+$$
+(j+1)(j+2)a_{j+2} - 2ja_j - (K-1)a_j = 0
+$$
+which we can simplify into:
+$$
+a_{j+2} = \frac{2ja_j +1-K}{(j+1)(j+2)}a_j
+$$
+With the above, starting with $a_0$, we can generate all the even numbered coefficients, and starting with $a_1$, generate all the odd coefficients. Therefore, we can write:
+$$
+h_E(\epsilon) = h_{E,even}(\epsilon) + h_{E,odd}(\epsilon)
+$$
+such that each is generated by either $a_0$ (the even) or by $a_1$ (the odd). It makes sense that for a second order differential equation we require two initial conditions, $a_0$ and $a_1$.
+\end{subanswer}
+
+\begin{subanswer}
+If we now focus on the solutions which are normalizable. Note that for large $j$, the recursion formula can be approximated:
+$$
+a_{j+2} \approx \frac{2}{j}a_j
+$$
+which has the approximate solution:
+$$
+a_j \approx \frac{C}{(j/2)!}
+$$
+Therefore, for large $\epsilon$ and high powers:
+$$
+h(\epsilon) \approx C \sum \frac{1}{(j/2)!}\epsilon^j \approx C \sum \frac{1}{j!}\epsilon^{2j} \approx Ce^{\epsilon^2}
+$$
+Then note that the above is exactly what we do NOT want. This is because if the above is true, the for large $\epsilon$ we have:
+$$
+\psi(\epsilon) = h(\epsilon)e^{-\epsilon/2} \approx Ce^{\epsilon/2}
+$$
+which diverges and is not normalizable. The only way we can manage this is if the Taylor series terminates. The only way this happens is if their exists a maximum $j$ such that $a_{j} \neq 0$ and $a_{j+2} = 0$. Note that this truncates either the odd or the even function, and that the one that is not truncated by this step must be $0$ from the start! Therefore, if we wish to normalize, it must be the case that:
+$$
+K = 2n + 1
+$$
+because this is the only way that $2ja_j + 1 - K = 0$, thereby terminating the sequence. However, restricting $K$ in this way and recalling that $K = \frac{2E}{\hbar \omega}$, we must have that:
+$$
+E = (n + \frac{1}{2})\hbar \omega
+$$
+for $n = 0,1,2,\cdots$
+\end{subanswer}
+
+\begin{subanswer}
+From the above, we can classify the allowable values of $E$ as $E_n = (n+ \frac{1}{2})\hbar \omega$. Each such value has a corresponding $h_n(\epsilon)$ function. Note that apart from the normalizing factor, each $h_n(\epsilon) = a H_n(\epsilon)$ where $H$ is the $n$-th Hermite polynomial. The polynomial is defined as:
+$$
+H_n(x) =  (-1)^ne^{x^2}\frac{d^n}{dx^n}e^{-x^2}
+$$
+
+Therefore, we have that for the $n$-th energy state:
+$$
+\psi_{E_n}(x) = A_n H_n\left(\sqrt{\frac{m \omega}{\hbar}}x\right)e^{-\frac{\left(\sqrt{\frac{m \omega}{\hbar}}x \right)^2}{2}}
+$$
+Then integrating over all of space:
+\begin{align*}
+\int_{-\infty}^{\infty} |\psi_{E_n}(x) | dx &= A_n^2 \int_{-\infty}^{\infty} H_n\left(\sqrt{\frac{m \omega}{\hbar}} x \right) H_n\left(\sqrt{\frac{m \omega}{\hbar}}x\right)e^{-\left(\sqrt{\frac{m \omega}{\hbar}}x \right)^2} dx \\
+&= A_n^2 \sqrt{\frac{\hbar}{m\omega}} \int_{-\infty}^{\infty} H_n(u)H_n(u) e^{-u^2} du \\
+&= A_n^2\sqrt{\frac{\hbar}{m \omega}}n!2^n\sqrt{\pi}
+\end{align*}
+We assumed above that $H_n^* = H_n$. Therefore, if we wish to normalize the integra;, we must have:
+$$
+A_n = \sqrt{\frac{\sqrt{m \omega}}{n!2^n\sqrt{\hbar \pi}}}
+$$
+Therefore, the normalized functions are:
+$$
+\psi(x)_{E_n} = \sqrt{\frac{\sqrt{m \omega}}{n!2^n\sqrt{\pi \hbar}}}H_n \left(\sqrt{\frac{m \omega}{\hbar}} x \right)e^{-\frac{\left(\sqrt{\frac{m \omega}{\hbar}}x \right)^2}{2}}
+$$
+\end{subanswer}
+\begin{subanswer}
+Because of the parity of $V(x)$ (it is symmetric, ie $V(x) = V(-x)$), it turns out the the solutions are either even or odd. This is because for even $n$, $h(\epsilon)$ is a polynomial of even powers, and therefore $h_{E_n}(-\epsilon) = h(\epsilon)$ (see the series definition of $h_{E_n}$ above). Similarly, for odd $n$, $h_{E_n}$ is a polynomial of only odd powers, therefore we have $h_{E_n}(-x) = -h_{E_n}$. The results is that for $n = 2m$:
+\begin{align*}
+\psi_{E_{2m}}(-x) &= A_{2m}H_{2m}\left(-\sqrt{\frac{m \omega}{\hbar}} x\right)e^{-\frac{\left(\sqrt{\frac{m \omega}{\hbar}}x \right)^2}{2}} \\
+&= A_{2m}H_{2m}\left(\sqrt{\frac{m \omega}{\hbar}} x\right)e^{-\frac{\left(\sqrt{\frac{m \omega}{\hbar}}x \right)^2}{2}} \\
+&= \psi_{E_{2m}}(x)
+\end{align*}
+and for odd $n = 2m+1$:
+\begin{align*}
+\psi_{E_{2m+1}}(-x) &= A_{2m+1}H_{2m+1}\left(-\sqrt{\frac{m \omega}{\hbar}} x\right)e^{-\frac{\left(-\sqrt{\frac{m \omega}{\hbar}}x \right)^2}{2}} \\
+&= -A_{2m+1}H_{2m+1}\left(\sqrt{\frac{m \omega}{\hbar}} x\right)e^{-\frac{\left(\sqrt{\frac{m \omega}{\hbar}}x \right)^2}{2}} \\
+&= -\psi_{E_{2m+1}}(x)
+\end{align*}
+\end{subanswer}
+
+\end{answer}
+
+\begin{answer}
+See attached code.
+\end{answer}
+
+\begin{answer}
+12 hours! Lot's of algebra...
+\end{answer}
+
+\begin{answer}
+Good stuff! More code please :)
+\end{answer}
+\end{document}
